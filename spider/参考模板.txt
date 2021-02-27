@@ -1,0 +1,25 @@
+xpath
+    from lxml import html
+
+
+    tree = html.fromstring(content)
+
+    book_names = tree.xpath('//h2/a')
+
+    //div[@class='info']/p 带有class=info  的元素
+    //@lang   选取属性
+
+
+
+网络请求模板
+    import requests
+
+    url='http://music.163.com/playlist?id=5051447966'
+    headers={'User-Agent' :'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36'}
+    r=requests.get(url,headers=headers)
+
+
+正则表达式
+    import re
+
+    songs_info=re.findall('<li><a href="/song\?id=(.*?)">(.*?)</a></li>',r.text)
