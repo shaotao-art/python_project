@@ -4,7 +4,7 @@
 
 
 '''
-from selenium import webdriver
+from selenium_work import webdriver
 登录淘宝
 
 chrome = webdriver.Chrome()

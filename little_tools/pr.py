@@ -86,7 +86,7 @@ def write_text():
             img.save('{}.png'.format(lines.index(each_line)))
             print('--请等待正在生成第{}张图片'.format(lines.index(each_line)))
 
-
+#/home/starfish/桌面/shuijiaonan.txt
 def main():
     print("#####  欢迎使用我的pr字幕生成器   #####")
     print('     初次使用请输入数字：1')
