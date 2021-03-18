@@ -1,8 +1,3 @@
-
-
-
-
-
 '''
 from selenium import webdriver
 登录淘宝
