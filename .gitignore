@@ -1,0 +1,12 @@
+# 默认忽略的文件
+
+
+/.idea/
+*.png
+*.ipynb
+.vscode
+*.jpg
+*.json
+venv
+.idea
+/.vscode/

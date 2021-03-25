@@ -1,8 +1,6 @@
 from lxml import html
 import requests
-from bs4 import BeautifulSoup as bs
-import time
-import re
+
 import json
 
 headers = {
