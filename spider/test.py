@@ -1,18 +1,103 @@
+import time
+import hashlib
 import requests
+import random
 import json
-import re
-import subprocess
-url='https://rb546n.jomodns.com/r/bdcdncmn3.inter.71edge.com/videos/vts/20210323/ad/6e/4082b4203732118fb9f2f5b62cbd9d2d.ts?key=02df0838288b54a60706118f237f12d7d&dis_k=c3fe6f03db9c73c5156ae0438e43fb6a&dis_t=1616674785&dis_dz=CMNET-BeiJing&dis_st=49&src=iqiyi.com&dis_hit=0&dis_tag=01000000&uuid=78f46d9f-605c7fe1-f4&sgti=14_16da677fb8f73287b62d8ba6d1bc5e0d_1616674794644&mss=1&pv=0.1&qd_tm=1616674785146&start=55613440&cross-domain=1&qd_ip=0&sd=0&dfp=&contentlength=13890560&qd_vip=1&qd_p=0&qd_k=de84235492797b6458fae8862f8bbf94&ve=&qd_tvid=5072596009294600&qd_src=01010031010000000000&stauto=1&end=69504000&qd_uid=1400635358&ori=pcw1&num=1616674802579'
-name='fffffffffff.mp4'
-headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chr\
-            ome/88.0.4324.182 Safari/537.36'}
+
+url='http://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule'
+
+headers={   'Cookie': 'OUTFOX_SEARCH_USER_ID=1389460813@123.125.1.12',
+            'Referer': 'http://fanyi.youdao.com/',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OSX10_14_2) AppleWebKit/537.36(KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36'
+       }
+
+def make_salt():
+    # 根据当前时间戳获取salt参数
+    s = int(time.time() * 1000) + random.randint(0, 10)
+    return str(s)
+
+def get_Its():
+    # 根据当前时间戳获取ts参数
+    s = int(time.time() * 1000)
+    return str(s)
+
+def make_sign(origin_input):
+    # 使用md5函数和其他参数，得到sign参数
+    words = "fanyideskweb" + origin_input + make_salt() + "n%A-rKaT5fb[Gy?;N5@Tj"
+
+    # 对words进行md5加密
+    hashlib.md5()
+    m = hashlib.md5()
+    m.update(words.encode('utf-8'))
+    return m.hexdigest()
 
 
-# 获取视频分片
-session=requests.session()
-res = session.get(url=url, headers=headers)
-with open(name.encode("utf-8").decode("utf-8"), 'ab') as fp:
-    fp.write(res.content)
-    fp.flush()
-fp.close()
+'''
+data的其他值没加就一直出不来
+'''
+def request(url):
+    Form_Data = {
+            'i': '喜欢',
+            'from': 'zh-CHS',
+            'to': 'en',
+            'smartresult': 'dict',
+            'client': 'fanyideskweb',
+            'salt': make_salt(),
+            'sign': make_sign('喜欢'),
+            'ts': get_Its(),
+            'bv': 'a4f4c82afd8bdba188e568d101be3f53',
+            'doctype': 'json',
+            'version': '2.1',
+            'keyfrom': 'fanyi.web',
+            'action': 'FY_BY_CLICKBUTTION'
+            }
+    r=requests.post(url=url,data=Form_Data,headers=headers)
+    print(r.text)
+    # data=json.loads(r.text)
+    # print(data["translateResult"]['tgt'])
+
+request(url)
+
+# define("newweb/common/docTrans", ["./form", "./md5", "./jquery-1.7", "./account", "./log", "../langSelect", "./TranslateState", "./star", "./select", "./utils"],
+# function(e, t) {
+#     function n() {
+#         var e = p("#language").val().split("2"),
+#         t = p("#docUploadFile").val(),
+#         n = t.split("."),
+#         r = n[n.length - 1],
+#         i = t.split("\\"),
+#         a = i[i.length - 1],
+#         o = p("#docUploadFile")[0].files,
+#         s = 1e3,
+#         l = (new Date).getTime(),
+#         c = p.md5("new-fanyiweb" + l + "ydsecret://newfanyiweb.doctran/sign/0j9n2{3mLSN-$Lg]K4o0N2}" + a);
+#         return o && o[0] && o[0].size && (s = o[0].size),
+#         {
+#             from: e[0],
+#             to: e[1],
+#             type: r,
+#             filename: a,
+#             client: "docserver",
+#             keyfrom: "new-fanyiweb",
+#             size: s,
+#             sign: c,
+#             salt: l
+#         }
+#     }
+
+# define("newweb/common/service", ["./utils", "./md5", "./jquery-1.7"],
+# function(e, t) {
+#     var n = e("./jquery-1.7");
+#     e("./utils");
+#     e("./md5");
+#     var r = function(e) {
+#         var t = n.md5(navigator.appVersion),
+#         r = "" + (new Date).getTime(),
+#         i = r + parseInt(10 * Math.random(), 10);
+#         return {
+#             ts: r,
+#             bv: t,
+#             salt: i,
+#             sign: n.md5("fanyideskweb" + e + i + "Tbh5E8=q6U3EXe+&L[4c@")
+#         }
+#     };

@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium_work.username_pw import *
 
-chrome=webdriver.Chrome()
+chrome=webdriver.Chrome('C:\\Users\starfish\python3.9.2\chromedriver')
 chrome.implicitly_wait(5)#wait chrome finish load
 
 
